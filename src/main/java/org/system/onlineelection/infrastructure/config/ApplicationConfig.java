@@ -22,22 +22,4 @@ public class ApplicationConfig {
         return new EntityMapping();
     }
 
-
-//    @Bean
-//    public ArticleMapping articleMapping(){
-//        return new ArticleMapping();
-//    }
-//    @Bean
-//    public CategoryMapping categoryMapping(){
-//        return new CategoryMapping();
-//    }
-//    @Bean
-//    public WorkpowerMapping workpowerMapping(){
-//        return new WorkpowerMapping();
-//    }
-//    @Bean
-//    public BudgetMapping budgetMapping(){return new BudgetMapping();}
-//    @Bean
-//    public BudgetFormMapping budgetFromMapping(){return new BudgetFormMapping();}
-
 }

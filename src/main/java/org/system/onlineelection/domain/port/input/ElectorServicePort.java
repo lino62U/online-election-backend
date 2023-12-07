@@ -8,7 +8,7 @@ import org.system.onlineelection.domain.model.PoliticalParty;
 import java.util.ArrayList;
 
 public interface ElectorServicePort {
-    void saveVote(VoteDto vote);
+    Boolean saveVote(VoteDto vote);
     PoliticalParty getResultVoteOfPoliticalParty(Integer idPoliticalParty);
     ArrayList<PoliticalParty> getPoliticalParty();
 

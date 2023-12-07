@@ -17,6 +17,5 @@ public class PoliticalParty {
 
     private Integer id;
     private String namePoliticalParty;
-    private List<CandidateEntity> candidates;
     private Integer numVotes;
 }

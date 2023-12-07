@@ -33,7 +33,7 @@ public class ElectorServiceImpl implements ElectorServicePort {
     private final EntityMapping entityMapping;
 
     @Override
-    public void saveVote(VoteDto vote) {
+    public Boolean saveVote(VoteDto vote) {
 
         //check this
         if (!voteRepository.existsById(vote.getIdElector())) {
@@ -53,7 +53,10 @@ public class ElectorServiceImpl implements ElectorServicePort {
             politicalPartyEntity.setNumVotes(politicalPartyEntity.getNumVotes() + 1);
 
             politicalPartyRepository.save(politicalPartyEntity);
+
+            return true;
         }
+        return false;
 
     }
 

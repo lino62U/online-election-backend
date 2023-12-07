@@ -64,6 +64,7 @@ public class AuthService {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles",roles);
+        claims.put("id_person", userDetails.getId());
         String jwt = jwtUtils.generateJwtToken(authentication,claims);
 
         return new JwtResponse(jwt);
