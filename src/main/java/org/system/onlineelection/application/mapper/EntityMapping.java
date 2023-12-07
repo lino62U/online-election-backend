@@ -31,9 +31,7 @@ public class EntityMapping {
     public PoliticalParty politicalPartyMapping  (PoliticalPartyEntityDto politicalPartyEntity) {
         return modelMapper.map(politicalPartyEntity, PoliticalParty.class);
     }
-    public Result resultMapping (ResultEntityDto resultEntity){
-        return modelMapper.map(resultEntity, Result.class);
-    }
+
     public Vote voteMapping (VoteEntity voteEntity){
         return modelMapper.map(voteEntity, Vote.class);
     }

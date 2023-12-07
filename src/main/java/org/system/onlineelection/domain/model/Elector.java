@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class Elector extends Person{
     private String email;
 
+    private Vote votes;
+
 }

@@ -9,11 +9,9 @@ import org.system.onlineelection.domain.model.PoliticalParty;
 import org.system.onlineelection.domain.port.input.ElectorServicePort;
 import org.system.onlineelection.infrastructure.adapter.entity.ElectorEntity;
 import org.system.onlineelection.infrastructure.adapter.entity.PoliticalPartyEntityDto;
-import org.system.onlineelection.infrastructure.adapter.entity.ResultEntityDto;
 import org.system.onlineelection.infrastructure.adapter.entity.VoteEntity;
 import org.system.onlineelection.infrastructure.repository.ElectorRepository;
 import org.system.onlineelection.infrastructure.repository.PoliticalPartyRepository;
-import org.system.onlineelection.infrastructure.repository.ResultRepository;
 import org.system.onlineelection.infrastructure.repository.VoteRepository;
 
 import java.util.ArrayList;
@@ -25,8 +23,7 @@ public class ElectorServiceImpl implements ElectorServicePort {
 
     @Autowired
     private VoteRepository voteRepository;
-    @Autowired
-    private ResultRepository resultRepository;
+
     @Autowired
     private ElectorRepository electorRepository;
     @Autowired
@@ -34,12 +31,12 @@ public class ElectorServiceImpl implements ElectorServicePort {
 
     @Autowired
     private final EntityMapping entityMapping;
+
     @Override
     public void saveVote(VoteDto vote) {
 
         //check this
-        if(!voteRepository.existsById(vote.getIdElector() ) )
-        {
+        if (!voteRepository.existsById(vote.getIdElector())) {
             VoteEntity voteEntity = new VoteEntity();
 
             ElectorEntity electorEntity = electorRepository.findById(vote.getIdElector()).get();
@@ -50,33 +47,33 @@ public class ElectorServiceImpl implements ElectorServicePort {
 
             voteRepository.save(voteEntity);
 
-            // Actualizar votos
-            ResultEntityDto result = getResultVoteOfPoliticalParty(vote.getIdPoliticalParty());
-            result.setNumVotes(result.getNumVotes() + 1);
-            resultRepository.save(result);
+            // Actualizar votos : Political Party
+
+            PoliticalPartyEntityDto politicalPartyEntity = politicalPartyRepository.findById(vote.getIdPoliticalParty()).get();
+            politicalPartyEntity.setNumVotes(politicalPartyEntity.getNumVotes() + 1);
+
+            politicalPartyRepository.save(politicalPartyEntity);
         }
 
     }
 
     @Override
-    public ResultEntityDto getResultVoteOfPoliticalParty(Integer idPoliticalParty) {
+    public PoliticalParty getResultVoteOfPoliticalParty(Integer idPoliticalParty) {
 
         // double find
-        Optional<ResultEntityDto> data = resultRepository.findById(idPoliticalParty);
+        Optional<PoliticalPartyEntityDto> data = politicalPartyRepository.findById(idPoliticalParty);
 
-        if(data.isPresent())
-        {
-            return data.get();
+        PoliticalParty politicalParty = new PoliticalParty();
+
+        if (data.isPresent()) {
+            politicalParty = entityMapping.politicalPartyMapping(data.get());
+            return politicalParty;
         }
 
         // Primer voto de un partido politico
-        ResultEntityDto newResult = new ResultEntityDto();
         PoliticalPartyEntityDto politicalPartyEntityDto = politicalPartyRepository.findById(idPoliticalParty).get();
-
-        newResult.setPoliticalParty(politicalPartyEntityDto);
-        newResult.setNumVotes(0);
-
-        return newResult;
+        politicalParty = entityMapping.politicalPartyMapping(politicalPartyEntityDto);
+        return politicalParty;
     }
 
     @Override
@@ -92,6 +89,4 @@ public class ElectorServiceImpl implements ElectorServicePort {
 
         return politicalPartiesList;
     }
-
-
 }

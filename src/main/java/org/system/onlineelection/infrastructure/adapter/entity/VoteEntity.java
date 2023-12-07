@@ -20,10 +20,9 @@ public class VoteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_elector")
     private ElectorEntity elector;
-
 
     @ManyToOne
     @JoinColumn(name = "id_partido")

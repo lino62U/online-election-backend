@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -18,11 +19,12 @@ public class PoliticalPartyEntityDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotNull
     private String namePoliticalParty;
 
-    @OneToOne(mappedBy = "politicalParty")
-    private CandidateEntity candidate;
-
     @OneToMany(mappedBy = "politicalParty")
-    private List<VoteEntity> votes;
+    private List<CandidateEntity> candidates;
+
+    private Integer numVotes = 0;
 }

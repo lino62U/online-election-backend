@@ -18,7 +18,7 @@ import java.util.Set;
 public class ElectorEntity extends PersonEntity {
     private String email;
 
-    @OneToMany(mappedBy = "elector")
-    private List<VoteEntity> votes;
+    @OneToOne(mappedBy = "elector")
+    private VoteEntity votes;
 
 }

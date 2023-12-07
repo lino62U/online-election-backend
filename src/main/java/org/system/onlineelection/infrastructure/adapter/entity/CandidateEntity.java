@@ -15,9 +15,8 @@ public class CandidateEntity extends ElectorEntity {
 
     private String job;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_partido")
-    @MapsId
     private PoliticalPartyEntityDto politicalParty;
 
 }
